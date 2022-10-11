@@ -14,15 +14,15 @@ class Login extends StatelessWidget {
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(20.0),
-              children: <Widget>[
+              children: const <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(40.0),
-                  child: Image.asset("assets/logo.png"),
+                  padding: EdgeInsets.all(40.0),
+                  child: Text('Hello User'),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 20.0,
                 ),
-                const LoginForm(),
+                LoginForm(),
               ],
             ),
           )
