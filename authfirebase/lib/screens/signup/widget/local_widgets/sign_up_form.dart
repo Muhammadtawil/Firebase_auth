@@ -22,22 +22,30 @@ class _SignUpFormState extends State<SignUpForm> {
       String fullName) async {
     final currentUser = Provider.of<CurrentUser>(context, listen: false);
     try {
-      if (await currentUser.signUpUser(email, password)) {
+      String returnValue = await currentUser.signUpUser(email, password);
+      if (returnValue == 'success') {
         if (mounted) {
           Navigator.pop(context);
         }
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('returnString'),
-              duration: Duration(seconds: 2),
+            SnackBar(
+              content: Text(returnValue),
+              duration: const Duration(seconds: 2),
             ),
           );
         }
       }
     } catch (e) {
-      rethrow;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
     }
   }
 

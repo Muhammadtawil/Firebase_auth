@@ -10,36 +10,31 @@ class CurrentUser with ChangeNotifier {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<bool> signUpUser(String email, String password) async {
-    bool retVal = false;
+  Future<String> signUpUser(String email, String password) async {
+    String retVal = 'error';
 
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      retVal = true;
-      // if (user != null) {
-      //   retVal = true;
-      // }
+      retVal = 'success';
     } catch (e) {
-      rethrow;
+      retVal = e.toString();
     }
 
     return retVal;
   }
 
-  Future<bool> loginUser(String email, String password) async {
-    bool retVal = false;
+  Future<String> loginUserWithEmailPassword(
+      String email, String password) async {
+    String retVal = 'error';
 
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       _uid = FirebaseAuth.instance.currentUser!.uid;
       _email = FirebaseAuth.instance.currentUser!.email;
-      retVal = true;
-      // if (_user != null) {
-      //   retVal = true;
-      // }
+      retVal = 'success';
     } catch (e) {
-      rethrow;
+      retVal = e.toString();
     }
 
     return retVal;

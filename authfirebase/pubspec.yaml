@@ -36,6 +36,7 @@ dependencies:
   firebase_messaging: ^13.1.0
   flutter:
     sdk: flutter
+  flutter_svg: ^1.1.5
   google_sign_in: ^5.4.2
   intl: ^0.17.0
   lottie: ^1.4.3
