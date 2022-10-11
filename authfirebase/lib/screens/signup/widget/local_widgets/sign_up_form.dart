@@ -1,4 +1,6 @@
+import 'package:authfirebase/states/current_user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../utilis/shadow_container.dart';
 
@@ -16,23 +18,28 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  // void _signUpUser(String email, String password, BuildContext context, String fullName) async {
-  //   try {
-  //     String returnString = await Auth().signUpUser(email, password, fullName);
-  //     if (returnString == "success") {
-  //       Navigator.pop(context);
-  //     } else {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(returnString),
-  //           duration: const Duration(seconds: 2),
-  //         ),
-  //       );
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  void _signUpUser(String email, String password, BuildContext context,
+      String fullName) async {
+    final currentUser = Provider.of<CurrentUser>(context, listen: false);
+    try {
+      if (await currentUser.signUpUser(email, password)) {
+        if (mounted) {
+          Navigator.pop(context);
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('returnString'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,17 +113,17 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
             onPressed: () {
-              // if (_passwordController.text == _confirmPasswordController.text) {
-              //   _signUpUser(_emailController.text, _passwordController.text, context,
-              //       _fullNameController.text);
-              // } else {
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //     const SnackBar(
-              //       content: Text("Passwords do not match"),
-              //       duration: Duration(seconds: 2),
-              //     ),
-              //   );
-              // }
+              if (_passwordController.text == _confirmPasswordController.text) {
+                _signUpUser(_emailController.text, _passwordController.text,
+                    context, _fullNameController.text);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Passwords do not match"),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
             },
           ),
         ],

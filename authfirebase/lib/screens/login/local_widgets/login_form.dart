@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../states/current_user.dart';
 import '../../../utilis/shadow_container.dart';
+import '../../home_screen.dart/home_screen.dart';
 import '../../signup/signup.dart';
 
 enum LoginType {
@@ -19,45 +22,58 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // void _loginUser({
-  //   required LoginType type,
-  //   required String email,
-  //   required String password,
-  //   required BuildContext context,
-  // }) async {
-  //   try {
-  //     String _returnString;
+//   void _loginUser({
+//     // required LoginType type,
+//     required String email,
+//     required String password,
+//     required BuildContext context,
+//   }) async {
+//         final currentUser = Provider.of<CurrentUser>(context, listen: false);
+//     try {
 
-  //     switch (type) {
-  //       case LoginType.email:
-  //         _returnString = await Auth().loginUserWithEmail(email, password);
-  //         break;
-  //       case LoginType.google:
-  //         _returnString = await Auth().loginUserWithGoogle();
-  //         break;
-  //       default:
-  //     }
+//        if (await currentUser.loginUser(email, password)) {
+// if (mounted) {
+//          Navigator.of(context).pushNamed(HomePage.routeName);
 
-  //     if (_returnString == "success") {
-  //       Navigator.pushAndRemoveUntil(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => OurRoot(),
-  //         ),
-  //         (route) => false,
-  //       );
-  //     } else {
-  //       Scaffold.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(_returnString),
-  //           duration: const Duration(seconds: 2),
-  //         ),
-  //       );
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+// }       }
+//       }
+//     } catch (e) {
+//      rethrow;
+//     }
+// }
+
+  void _loginUser({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    final currentUser = Provider.of<CurrentUser>(context, listen: false);
+    try {
+      if (await currentUser.loginUser(email, password)) {
+        if (mounted) {
+          Navigator.of(context).pushReplacementNamed(HomePage.routeName);
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('wrong Password'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('wrong Password $e'),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    }
+  }
 
   // Widget _googleButton() {
   //   return OutlineButton(
@@ -129,24 +145,27 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(
             height: 20.0,
           ),
-          TextButton(
+          ElevatedButton(
+            style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.purple),
+            ),
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 100),
               child: Text(
                 "Log In",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 20.0,
                 ),
               ),
             ),
             onPressed: () {
-              // _loginUser(
-              //     type: LoginType.email,
-              //     email: _emailController.text,
-              //     password: _passwordController.text,
-              //     context: context);
+              _loginUser(
+                  // type: LoginType.email,
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                  context: context);
             },
           ),
           TextButton(

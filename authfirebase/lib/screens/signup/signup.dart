@@ -2,6 +2,8 @@ import 'package:authfirebase/screens/signup/widget/local_widgets/sign_up_form.da
 import 'package:flutter/material.dart';
 
 class SignUp extends StatelessWidget {
+  static const routeName = '/sign-up';
+
   const SignUp({super.key});
 
   @override

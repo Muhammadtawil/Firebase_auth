@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'local_widgets/login_form.dart';
 
 class Login extends StatelessWidget {
+  // static const routeName = '/login';
   const Login({super.key});
 
   @override
