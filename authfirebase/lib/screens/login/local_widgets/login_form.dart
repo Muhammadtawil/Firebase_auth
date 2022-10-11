@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../utilis/shadow_container.dart';
+import '../../signup/signup.dart';
 
 enum LoginType {
   email,
@@ -152,11 +153,11 @@ class _LoginFormState extends State<LoginForm> {
             child: const Text("Don't have an account? Sign up here"),
             // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onPressed: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (context) => SignUp(),
-              //   ),
-              // );
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SignUp(),
+                ),
+              );
             },
           ),
           // _googleButton(),

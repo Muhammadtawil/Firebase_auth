@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import 'local_widgets/login_form.dart';
 
@@ -14,15 +15,19 @@ class Login extends StatelessWidget {
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(20.0),
-              children: const <Widget>[
+              children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.all(40.0),
-                  child: Text('Hello User'),
+                  padding: const EdgeInsets.all(40.0),
+                  child: Lottie.network(
+                    'https://assets3.lottiefiles.com/private_files/lf30_fhynbgue.json',
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height * 0.3,
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20.0,
                 ),
-                LoginForm(),
+                const LoginForm(),
               ],
             ),
           )
