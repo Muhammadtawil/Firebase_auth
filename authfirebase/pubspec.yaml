@@ -37,6 +37,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^1.1.5
+  google_fonts: ^3.0.1
   google_sign_in: ^5.4.2
   intl: ^0.17.0
   lottie: ^1.4.3
